@@ -31,13 +31,13 @@ ENV PYTHON_RELEASE=2.7.18
 ADD install_python.ps1 C:\TEMP\install_python.ps1
 RUN powershell C:\TEMP\install_python.ps1
 
+ADD https://bintray.com/jetbrains/skija/download_file?file_path=zip.zip C:\TEMP\zip.zip
+RUN tar -xf C:\TEMP\zip.zip
+RUN setx /M PATH "C:\zip;%PATH%"
+
 COPY install_git.ps1 C:\TEMP\install_git.ps1
 RUN powershell C:\TEMP\install_git.ps1
-RUN setx /M PATH "C:\Program Files\Git\bin;%PATH%"
-
-ADD https://bintray.com/jetbrains/skija/download_file?file_path=zip.zip C:\TEMP\zip.zip
-RUN tar -tf C:\TEMP\zip.zip
-RUN setx /M PATH "C:\zip;%PATH%"
+RUN setx /M PATH "C:\Git\cmd;C:\Git\bin;C:\Git\usr\bin;%PATH%"
 
 RUN git.exe clone "https://chromium.googlesource.com/chromium/tools/depot_tools.git" "C:\depot_tools"
 RUN setx /M PATH "C:\depot_tools;%PATH%"
